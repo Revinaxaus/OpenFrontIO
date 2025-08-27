@@ -53,7 +53,7 @@ export class TeamStats extends LitElement implements Layer {
 
   private updateTeamStats() {
     if (this.game === undefined) throw new Error("Not initialized");
-    const players = this.game.playerViews();
+    const players = this.game.visiblePlayerViews();
     const grouped: Record<Team, PlayerView[]> = {};
 
     for (const player of players) {

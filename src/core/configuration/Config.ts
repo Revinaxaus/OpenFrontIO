@@ -86,6 +86,7 @@ export type Config = {
   infiniteTroops(): boolean;
   donateTroops(): boolean;
   instantBuild(): boolean;
+  fogOfWar(): boolean;
   numSpawnPhaseTurns(): number;
   userSettings(): UserSettings;
   playerTeams(): TeamCountConfig;

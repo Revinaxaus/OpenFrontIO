@@ -45,6 +45,7 @@ export class GameManager {
         disabledUnits: [],
         donateGold: false,
         donateTroops: false,
+        fogOfWar: false,
         gameMap: GameMapType.World,
         gameMode: GameMode.FFA,
         gameType: GameType.Private,

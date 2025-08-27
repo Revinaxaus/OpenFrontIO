@@ -165,7 +165,7 @@ export class TerritoryLayer implements Layer {
       this.game.height(),
     );
     const humans = this.game
-      .playerViews()
+      .visiblePlayerViews()
       .filter((p) => p.type() === PlayerType.Human);
 
     for (const human of humans) {
@@ -409,11 +409,20 @@ export class TerritoryLayer implements Layer {
   }
 
   paintTerritory(tile: TileRef, isBorder = false) {
+    const visible = this.game.visiblePlayerIDs().has(
+      this.game.ownerID(tile),
+    );
+    if (!visible) {
+      this.clearTile(tile);
+      this.clearAlternativeTile(tile);
+      return;
+    }
     if (isBorder && !this.game.hasOwner(tile)) {
       return;
     }
     if (this.imageData === undefined) throw new Error("Not initialized");
-    if (this.alternativeImageData === undefined) throw new Error("Not initialized");
+    if (this.alternativeImageData === undefined)
+      throw new Error("Not initialized");
 
     if (!this.game.hasOwner(tile)) {
       if (this.game.hasFallout(tile)) {

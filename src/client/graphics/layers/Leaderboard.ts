@@ -76,7 +76,7 @@ export class Leaderboard extends LitElement implements Layer {
     if (this.game === null) throw new Error("Not initialized");
     const myPlayer = this.game.myPlayer();
 
-    let sorted = this.game.playerViews();
+    let sorted = this.game.visiblePlayerViews();
 
     const compare = (a: number, b: number) =>
       this._sortOrder === "asc" ? a - b : b - a;

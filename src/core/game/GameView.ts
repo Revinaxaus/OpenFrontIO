@@ -217,6 +217,12 @@ export class PlayerView {
     return this.game.worker.playerBorderTiles(this.id());
   }
 
+  neighbors(): PlayerView[] {
+    return this.data.neighbors
+      .map((id) => this.game.playerBySmallID(id))
+      .filter((p): p is PlayerView => p instanceof PlayerView);
+  }
+
   outgoingAttacks(): AttackUpdate[] {
     return this.data.outgoingAttacks;
   }
@@ -523,6 +529,21 @@ export class GameView implements GameMap {
     return Array.from(this._players.values());
   }
 
+  visiblePlayerIDs(): Set<number> {
+    const all = new Set(this.playerViews().map((p) => p.smallID()));
+    if (!this.config().fogOfWar()) {
+      return all;
+    }
+    const my = this.myPlayer();
+    if (!my) return new Set();
+    return new Set([my.smallID(), ...my.data.neighbors]);
+  }
+
+  visiblePlayerViews(): PlayerView[] {
+    const ids = this.visiblePlayerIDs();
+    return this.playerViews().filter((p) => ids.has(p.smallID()));
+  }
+
   playerBySmallID(id: number): PlayerView | TerraNullius {
     if (id === 0) {
       return new TerraNulliusImpl();
@@ -552,7 +573,11 @@ export class GameView implements GameMap {
   }
 
   owner(tile: TileRef): PlayerView | TerraNullius {
-    return this.playerBySmallID(this.ownerID(tile));
+    const ownerID = this.ownerID(tile);
+    if (!this.visiblePlayerIDs().has(ownerID)) {
+      return new TerraNulliusImpl();
+    }
+    return this.playerBySmallID(ownerID);
   }
 
   ticks(): Tick {
@@ -566,11 +591,17 @@ export class GameView implements GameMap {
     return this._config;
   }
   units(...types: UnitType[]): UnitView[] {
+    const visible = this.visiblePlayerIDs();
     if (types.length === 0) {
-      return Array.from(this._units.values()).filter((u) => u.isActive());
+      return Array.from(this._units.values()).filter(
+        (u) => u.isActive() && visible.has(u.owner().smallID()),
+      );
     }
     return Array.from(this._units.values()).filter(
-      (u) => u.isActive() && types.includes(u.type()),
+      (u) =>
+        u.isActive() &&
+        visible.has(u.owner().smallID()) &&
+        types.includes(u.type()),
     );
   }
   unit(id: number): UnitView | undefined {

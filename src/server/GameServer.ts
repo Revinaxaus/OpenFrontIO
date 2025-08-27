@@ -111,6 +111,9 @@ export class GameServer {
     if (gameConfig.instantBuild !== undefined) {
       this.gameConfig.instantBuild = gameConfig.instantBuild;
     }
+    if (gameConfig.fogOfWar !== undefined) {
+      this.gameConfig.fogOfWar = gameConfig.fogOfWar;
+    }
     if (gameConfig.gameMode !== undefined) {
       this.gameConfig.gameMode = gameConfig.gameMode;
     }
