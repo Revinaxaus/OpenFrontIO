@@ -140,6 +140,7 @@ export const GameConfigSchema = z.object({
   disabledUnits: z.enum(UnitType).array().optional(),
   donateGold: z.boolean(),
   donateTroops: z.boolean(),
+  fogOfWar: z.boolean(),
   gameMap: z.enum(GameMapType),
   gameMode: z.enum(GameMode),
   gameType: z.enum(GameType),

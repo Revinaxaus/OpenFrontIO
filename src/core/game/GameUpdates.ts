@@ -166,6 +166,7 @@ export type PlayerUpdate = {
   incomingAttacks: AttackUpdate[];
   outgoingAllianceRequests: PlayerID[];
   alliances: AllianceView[];
+  neighbors: number[];
   hasSpawned: boolean;
   betrayals?: bigint;
 };

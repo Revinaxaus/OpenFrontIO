@@ -47,6 +47,7 @@ export class HostLobbyModal extends LitElement {
   @state() private infiniteTroops = false;
   @state() private donateTroops = false;
   @state() private instantBuild = false;
+  @state() private fogOfWar = false;
   @state() private lobbyId = "";
   @state() private copySuccess = false;
   @state() private clients: ClientInfo[] = [];
@@ -382,6 +383,22 @@ export class HostLobbyModal extends LitElement {
                 </label>
 
                 <label
+                  for="fog-of-war"
+                  class="option-card ${this.fogOfWar ? "selected" : ""}"
+                >
+                  <div class="checkbox-icon"></div>
+                  <input
+                    type="checkbox"
+                    id="fog-of-war"
+                    @change=${this.handleFogOfWarChange}
+                    .checked=${this.fogOfWar}
+                  />
+                  <div class="option-card-title">
+                    ${translateText("host_modal.fog_of_war")}
+                  </div>
+                </label>
+
+                <label
                   for="donate-gold"
                   class="option-card ${this.donateGold ? "selected" : ""}"
                 >
@@ -608,6 +625,11 @@ export class HostLobbyModal extends LitElement {
     this.putGameConfig();
   }
 
+  private handleFogOfWarChange(e: Event) {
+    this.fogOfWar = Boolean((e.target as HTMLInputElement).checked);
+    this.putGameConfig();
+  }
+
   private handleInfiniteGoldChange(e: Event) {
     this.infiniteGold = Boolean((e.target as HTMLInputElement).checked);
     this.putGameConfig();
@@ -663,6 +685,7 @@ export class HostLobbyModal extends LitElement {
           infiniteTroops: this.infiniteTroops,
           donateTroops: this.donateTroops,
           instantBuild: this.instantBuild,
+          fogOfWar: this.fogOfWar,
           gameMode: this.gameMode,
           disabledUnits: this.disabledUnits,
           playerTeams: this.teamCount,

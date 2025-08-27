@@ -153,13 +153,13 @@ export class NameLayer implements Layer {
       return;
     }
     const sorted = this.game
-      .playerViews()
+      .visiblePlayerViews()
       .sort((a, b) => b.numTilesOwned() - a.numTilesOwned());
     if (sorted.length > 0) {
       this.firstPlace = sorted[0];
     }
 
-    for (const player of this.game.playerViews()) {
+    for (const player of this.game.visiblePlayerViews()) {
       if (player.isAlive()) {
         if (!this.seenPlayers.has(player)) {
           this.seenPlayers.add(player);

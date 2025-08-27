@@ -41,6 +41,7 @@ export class SinglePlayerModal extends LitElement {
   @state() private infiniteTroops = false;
   @state() private readonly donateTroops = false;
   @state() private instantBuild = false;
+  @state() private fogOfWar = false;
   @state() private useRandomMap = false;
   @state() private gameMode: GameMode = GameMode.FFA;
   @state() private teamCount: TeamCountConfig = 2;
@@ -272,6 +273,22 @@ export class SinglePlayerModal extends LitElement {
               </label>
 
               <label
+                for="singleplayer-modal-fog-of-war"
+                class="option-card ${this.fogOfWar ? "selected" : ""}"
+              >
+                <div class="checkbox-icon"></div>
+                <input
+                  type="checkbox"
+                  id="singleplayer-modal-fog-of-war"
+                  @change=${this.handleFogOfWarChange}
+                  .checked=${this.fogOfWar}
+                />
+                <div class="option-card-title">
+                  ${translateText("single_modal.fog_of_war")}
+                </div>
+              </label>
+
+              <label
                 for="singleplayer-modal-infinite-gold"
                 class="option-card ${this.infiniteGold ? "selected" : ""}"
               >
@@ -370,6 +387,10 @@ export class SinglePlayerModal extends LitElement {
     this.instantBuild = Boolean((e.target as HTMLInputElement).checked);
   }
 
+  private handleFogOfWarChange(e: Event) {
+    this.fogOfWar = Boolean((e.target as HTMLInputElement).checked);
+  }
+
   private handleInfiniteGoldChange(e: Event) {
     this.infiniteGold = Boolean((e.target as HTMLInputElement).checked);
   }
@@ -458,6 +479,7 @@ export class SinglePlayerModal extends LitElement {
               infiniteTroops: this.infiniteTroops,
               donateTroops: this.donateTroops,
               instantBuild: this.instantBuild,
+              fogOfWar: this.fogOfWar,
               disabledUnits: this.disabledUnits
                 .map((u) => Object.values(UnitType).find((ut) => ut === u))
                 .filter((ut): ut is UnitType => ut !== undefined),

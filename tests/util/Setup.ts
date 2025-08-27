@@ -68,6 +68,7 @@ export async function setup(
     disableNPCs: false,
     donateGold: false,
     donateTroops: false,
+    fogOfWar: false,
     gameMap: GameMapType.Asia,
     gameMode: GameMode.FFA,
     gameType: GameType.Singleplayer,

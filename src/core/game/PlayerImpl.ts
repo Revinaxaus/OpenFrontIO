@@ -175,6 +175,7 @@ export class PlayerImpl implements Player {
             expiresAt: a.expiresAt(),
           }) satisfies AllianceView,
       ),
+      neighbors: this.neighbors().map((p) => p.smallID()),
       hasSpawned: this.hasSpawned(),
       betrayals: stats?.betrayals,
     };

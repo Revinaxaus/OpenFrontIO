@@ -83,6 +83,7 @@ export class MapPlaylist {
       disabledUnits: [],
       donateGold: true,
       donateTroops: true,
+      fogOfWar: false,
       gameMap: map,
       gameMode: mode,
       gameType: GameType.Public,
